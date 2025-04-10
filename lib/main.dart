@@ -1,0 +1,36 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:schools/home.dart';
+import 'package:schools/welcome.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      showSemanticsDebugger: false,
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.pink,
+      ),
+      home: Builder(
+        builder: (context) {
+          if(FirebaseAuth.instance.currentUser!=null){
+            return const MyHomePage(title: '');
+          }else{
+            return WelcomePage();
+          }
+        }
+      ),
+    );
+  }
+}
